@@ -1,0 +1,110 @@
+
+import React, { useEffect } from 'react';
+import { motion } from "motion/react";
+import { Star, Calendar, Clock, MapPin, Home, UserCheck, Flame, Cpu } from 'lucide-react';
+import { useContent } from '../contexts/ContentContext';
+
+export const Hero: React.FC = () => {
+  const { content } = useContent();
+  const { hero } = content;
+
+  // Icon mapping for stats (Recruitment Summary)
+  const statIcons = [
+    <Flame size={16} className="text-red-600 animate-pulse" />,
+    <Clock size={16} className="text-red-600" />,
+    <Calendar size={16} className="text-red-600" />,
+    <MapPin size={16} className="text-red-600" />,
+    <Home size={16} className="text-red-600" />,
+    <UserCheck size={16} className="text-red-600" />,
+  ];
+
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950 pt-20">
+      
+      {/* Background Layers (z-0) */}
+      <div className="absolute inset-0 z-0 bg-slate-950 pointer-events-none">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#1a1a1a_0%,#000000_100%)]" />
+        
+        {/* Minimal Overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black" />
+        
+        {/* Glow Effects */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-red-700/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-zinc-800 to-transparent opacity-50" />
+      </div>
+
+      {/* Content (z-10) */}
+      <div className="container mx-auto px-4 z-10 relative text-center">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-700/10 border border-red-700/30 text-red-600 mb-6 animate-bounce shadow-[0_0_20px_rgba(185,28,28,0.3)]">
+          <Star size={14} fill="currentColor" />
+          <span className="text-xs font-bold tracking-wide">{hero.badge}</span>
+        </div>
+        
+          <video 
+            className="w-full md:w-2/5 mx-auto h-auto mb-6 rounded-lg" 
+            autoPlay 
+            muted 
+            loop 
+            playsInline
+            referrerPolicy="no-referrer"
+          >
+            <source src="https://mblogvideo-phinf.pstatic.net/MjAyNjA2MTJfMTMx/MDAxNzgxMjUxMzMzNDcz.zs3SAo4V_XW5m-_jT6tKL0AtG16Eb2U-9cUn8zFsk1Yg.lf8LazLrWhT0UJoSm5DXKTMQqpirhXt9xjd7txyS-EEg.GIF/rotem_ai_pc0_gif_(1)_(2)_(1).gif?type=mp4w800" type="video/mp4" />
+          </video>
+        
+        {/* Banner */}
+        <div className="w-full flex justify-center mb-6">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="inline-flex items-center px-6 py-3 rounded-full bg-red-900/10 border border-red-500/20 shadow-[0_0_20px_rgba(185,28,28,0.1)]"
+          >
+            <span className="text-white text-sm md:text-md font-medium text-center">
+              본 과정은 현대로템이 주관하는 <br/>K-디지털 트레이닝 디지털 선도기업 과정입니다.<br/>고용노동부와 한국전파진흥협회가 <br/>운영지원하는 프로그램입니다.
+            </span>
+          </motion.div>
+        </div>
+
+        {/* Course Title Plate */}
+        <div className="max-w-4xl mx-auto mb-12 animate-fade-in-up delay-300">
+          <div className="relative p-6 md:p-8 rounded-2xl bg-zinc-900/60 backdrop-blur-xl border border-white/10 overflow-hidden group">
+            {/* Background Accent */}
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-700 to-transparent opacity-60"></div>
+            <div className="absolute inset-0 bg-red-700/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            
+            <div className="flex flex-col items-center gap-3">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-600 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-red-700"></span>
+                </span>
+                <span className="text-[10px] md:text-xs font-black text-gray-500 uppercase tracking-[0.3em]">Official Course Name</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <Cpu className="text-red-600 hidden md:block" size={32} />
+                <h2 id="course-title" className="text-2xl md:text-4xl font-black text-white tracking-tighter">
+                  현대로템 K-방산 <br /> SMART AI모델 개발과정
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Recruitment Info Summary (6 Items) */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 w-full border-t border-white/10 pt-10 bg-black/10 backdrop-blur-sm rounded-2xl">
+          {hero.stats.map((stat, idx) => (
+            <div key={idx} className="flex flex-col items-center justify-center p-4 rounded-xl bg-zinc-900/40 border border-white/5 hover:border-red-600/30 transition-colors group">
+              <div className="flex items-center gap-2 mb-2">
+                {statIcons[idx]}
+                <p className="text-gray-500 text-[10px] md:text-xs font-bold uppercase tracking-widest">{stat.label}</p>
+              </div>
+              <p className={`text-sm md:text-lg font-black break-keep ${stat.value.includes('모집 중') ? 'text-red-600' : stat.label === '교육기간' ? 'text-yellow-400' : 'text-white'}`}>
+                {stat.value}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
